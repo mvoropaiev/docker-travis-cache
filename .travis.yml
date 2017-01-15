@@ -1,7 +1,19 @@
+language: generic
+
 sudo: required
 
 services:
   - docker
 
 before_install:
+  - cat docker/postgres.tar | docker import - busybox_import
+
+install:
   - docker build -t test/postgres .
+
+after_install:
+  - docker export test/postgres > docker/postgres.tar
+
+cache:
+  directories:
+  - docker
