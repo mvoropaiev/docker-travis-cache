@@ -5,15 +5,15 @@ sudo: required
 services:
   - docker
 
-before_install:
+before_script:
   - cat docker/postgres.tar | docker import - busybox_import
 
-install:
+script:
   - docker build -t test/postgres .
 
-after_install:
+after_script:
   - docker export test/postgres > docker/postgres.tar
 
 cache:
   directories:
-  - docker
+    - docker
